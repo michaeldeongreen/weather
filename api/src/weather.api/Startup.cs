@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using weather.core.Interfaces;
+using weather.core.services;
 
 namespace weather.api
 {
@@ -26,6 +28,7 @@ namespace weather.api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            ConfigureLogging(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +49,21 @@ namespace weather.api
             {
                 endpoints.MapControllers();
             });
+        }
+
+        public virtual void ConfigureLogging(IServiceCollection services)
+        {
+            services.AddSingleton(typeof(IObjectLogger<>), typeof(ObjectLogger<>));
+            var instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY");
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
+                if (!string.IsNullOrEmpty(instrumentationKey))
+                {
+                    loggingBuilder.AddApplicationInsights(instrumentationKey);
+                }
+                loggingBuilder.AddConsole();
+            });            
         }
     }
 }

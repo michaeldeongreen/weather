@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using weather.core;
+using weather.core.Interfaces;
 
 namespace weather.api.Controllers
 {
@@ -16,9 +18,9 @@ namespace weather.api.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IObjectLogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(IObjectLogger<WeatherForecastController> logger)
         {
             _logger = logger;
         }
@@ -26,7 +28,12 @@ namespace weather.api.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.LogInformation(LogEventIds.WeatherForecastControllerGetEnterInformation, null);
+
             var rng = new Random();
+
+            _logger.LogInformation(LogEventIds.WeatherForecastControllerGetExitInformation, null);
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
