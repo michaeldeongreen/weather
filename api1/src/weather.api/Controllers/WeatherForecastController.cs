@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using weather.core;
 using weather.core.Interfaces;
+using weather.core.Models;
 
 namespace weather.api.Controllers
 {
@@ -19,20 +20,22 @@ namespace weather.api.Controllers
         };
 
         private readonly IObjectLogger<WeatherForecastController> _logger;
+        private readonly LogContext _logContext;
 
         public WeatherForecastController(IObjectLogger<WeatherForecastController> logger)
         {
+            _logContext = new LogContext();
             _logger = logger;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            _logger.LogInformation(LogEventIds.WeatherForecastControllerGetEnterInformation, null);
+            _logger.LogInformationObject(LogEventIds.WeatherForecastControllerGetEnterInformation, _logContext);
 
             var rng = new Random();
 
-            _logger.LogInformation(LogEventIds.WeatherForecastControllerGetExitInformation, null);
+            _logger.LogInformationObject(LogEventIds.WeatherForecastControllerGetExitInformation, _logContext);
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
