@@ -54,7 +54,7 @@ namespace weather2.api
         public virtual void ConfigureLogging(IServiceCollection services)
         {
             services.AddSingleton(typeof(IObjectLogger<>), typeof(ObjectLogger<>));
-            var instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY");
+            var instrumentationKey = Configuration["APPINSIGHTS_INSTRUMENTATIONKEY"];
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
