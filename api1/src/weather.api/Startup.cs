@@ -53,6 +53,9 @@ namespace weather.api
 
         public virtual void ConfigureLogging(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
+            services.AddSingleton(typeof(IObjectLogger<>), typeof(ObjectLogger<>));
+            /*
             services.AddSingleton(typeof(IObjectLogger<>), typeof(ObjectLogger<>));
             var instrumentationKey = Environment.GetEnvironmentVariable("APPINSIGHTS_INSTRUMENTATIONKEY");
             services.AddLogging(loggingBuilder =>
@@ -63,7 +66,8 @@ namespace weather.api
                     loggingBuilder.AddApplicationInsights(instrumentationKey);
                 }
                 loggingBuilder.AddConsole();
-            });            
+            });
+            */
         }
     }
 }

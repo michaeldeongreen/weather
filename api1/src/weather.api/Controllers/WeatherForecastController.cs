@@ -31,11 +31,17 @@ namespace weather.api.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            _logger.LogInformationObject(LogEventIds.WeatherForecastControllerGetEnterInformation, _logContext);
-
+            //_logger.LogInformation(LogEventIds.WeatherForecastControllerGetEnterInformation, "Enter", _logContext);
+             _logger.LogWarningObject(LogEventIds.WeatherForecastControllerGetEnterInformation, _logContext);
+            /*using (_logger.BeginScope(
+                new Dictionary<string, object> { {"PersonId", _logContext.UserId } }))
+            {
+                _logger.LogWarning("Hello");
+                _logger.LogWarning("World");
+            }*/
             var rng = new Random();
-
-            _logger.LogInformationObject(LogEventIds.WeatherForecastControllerGetExitInformation, _logContext);
+            //_logger.LogInformation(LogEventIds.WeatherForecastControllerGetExitInformation, "Exit", _logContext);
+            _logger.LogWarningObject(LogEventIds.WeatherForecastControllerGetExitInformation, _logContext);
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
