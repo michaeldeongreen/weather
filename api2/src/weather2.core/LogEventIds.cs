@@ -25,7 +25,7 @@ namespace weather2.core
         public static EventId AppLoggerParsingError = new EventId(40000, "ERROR: Logging object parsing failed.");
 
         // Weather
-        public static EventId WeatherForecastControllerGetEnterInformation = new EventId(20100, "INFORMATION: Logging WeatherForecastController GET enter.");
-        public static EventId WeatherForecastControllerGetExitInformation = new EventId(20101, "INFORMATION: Logging WeatherForecastController GET exit.");
+        public static EventId WeatherForecast2ControllerGetEnterInformation = new EventId(20100, "INFORMATION: Logging WeatherForecastController GET enter.");
+        public static EventId WeatherForecast2ControllerGetExitInformation = new EventId(20101, "INFORMATION: Logging WeatherForecastController GET exit.");
     }
 }
